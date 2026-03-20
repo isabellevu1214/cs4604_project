@@ -1,0 +1,24 @@
+{
+  "name": "cs4604_project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isabellevu1214/cs4604_project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/isabellevu1214/cs4604_project/issues"
+  },
+  "homepage": "https://github.com/isabellevu1214/cs4604_project#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.2.1",
+    "pg": "^8.20.0"
+  }
+}

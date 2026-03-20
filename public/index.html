@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClearPath Finance</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 100px 120px;
+            background-color: white;
+            color: black;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        p {
+            font-size: 1.8rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>ClearPath Finance</h1>
+    <p id="status-message">Connecting to database...</p>
+
+    <script>
+        async function testDatabaseConnection() {
+            const statusMessage = document.getElementById('status-message');
+
+            try {
+                const response = await fetch('/test-db');
+                const data = await response.json();
+
+                if (data.success) {
+                    statusMessage.textContent = "Successfully connected to PostgreSQL.";
+                } else {
+                    statusMessage.textContent = "Failed to connect to PostgreSQL.";
+                }
+            } catch (error) {
+                statusMessage.textContent = "Could not reach the Node.js server.";
+            }
+        }
+
+        testDatabaseConnection();
+    </script>
+</body>
+
+</html>
