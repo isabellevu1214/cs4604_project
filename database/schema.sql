@@ -16,10 +16,7 @@ CREATE TABLE app_user (
     last_name    VARCHAR(50) NOT NULL,
     email        VARCHAR(255) NOT NULL UNIQUE,
     password     VARCHAR(255) NOT NULL,
-    user_role    VARCHAR(30) NOT NULL CHECK (user_role IN ('Undergraduate', 'Graduate', 'Alumni', 'FacultyStaff', 'Admin')),
-    preferred_language VARCHAR(30) DEFAULT 'English',
-    preferred_currency VARCHAR(10) DEFAULT 'USD',
-    created_at   DATE NOT NULL DEFAULT CURRENT_DATE,
+    user_type    VARCHAR(30) NOT NULL CHECK (user_type IN ('User', 'Admin')),
     CHECK (char_length(password) >= 8),
     CHECK (email ~* '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$')
 );

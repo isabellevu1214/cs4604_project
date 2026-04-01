@@ -1,26 +1,27 @@
 -- Sample users
-INSERT INTO app_user (first_name, last_name, email, password, user_role, preferred_language, preferred_currency, created_at) VALUES
-('Kelsey',   'Mwangi', 'kelsey.mwangi@vt.edu',   'budgetpass1', 'Undergraduate', 'English', 'USD', '2026-01-10'),
-('Ariya',    'Das',    'ariya.das@vt.edu',       'budgetpass2', 'Graduate',      'English', 'USD', '2026-01-11'),
-('Faith',    'Yuan',   'faith.yuan@gmail.com',   'budgetpass3', 'Alumni',        'English', 'USD', '2026-01-12'),
-('Jordan',   'Rivera', 'jrivera@vt.edu',         'budgetpass4', 'FacultyStaff',  'English', 'USD', '2026-01-12'),
-('Mina',     'Lopez',  'mina.lopez@vt.edu',      'budgetpass5', 'Undergraduate', 'Spanish', 'USD', '2026-01-13'),
-('Ethan',    'Kim',    'ethan.kim@vt.edu',       'budgetpass6', 'Undergraduate', 'English', 'USD','2026-01-14'),
-('Sofia',    'Garcia',  'sofia.garcia@vt.edu',    'budgetpass7','Graduate','English','USD','2026-01-14'),
-('Liam','Nguyen','liam.nguyen@vt.edu','budgetpass8','Undergraduate','English','USD','2026-01-15'),
-('Olivia','Patel','olivia.patel@vt.edu','budgetpass9','Graduate','English','USD','2026-01-15'),
-('Noah','Smith','noah.smith@gmail.com','budgetpass10','Alumni','English','USD','2026-01-16'),
-('Emma','Brown','emma.brown@vt.edu','budgetpass11','Undergraduate','English','USD','2026-01-16'),
-('Ava','Johnson','ava.johnson@vt.edu','budgetpass12','Graduate','English','USD','2026-01-17'),
-('Lucas','Martinez','lucas.m@vt.edu','budgetpass13','FacultyStaff','English','USD','2026-01-17'),
-('Mason','Davis','mason.davis@vt.edu','budgetpass14','Undergraduate','English','USD','2026-01-18'),
-('Isabella','Wilson','isabella.w@vt.edu','budgetpass15','Graduate','English','USD','2026-01-18'),
-('James','Taylor','james.t@vt.edu','budgetpass16','FacultyStaff','English','USD','2026-01-19'),
-('Charlotte','Anderson','charlotte.a@vt.edu','budgetpass17','Undergraduate','English','USD','2026-01-19'),
-('Benjamin','Thomas','ben.thomas@vt.edu','budgetpass18','Graduate','English','USD','2026-01-20'),
-('Amelia','Hernandez','amelia.h@vt.edu','budgetpass19','Undergraduate','English','USD','2026-01-20'),
-('Elijah','Moore','elijah.moore@gmail.com','budgetpass20','Alumni','English','USD','2026-01-21');
-
+INSERT INTO app_user
+(first_name, last_name, email, password, user_type)
+VALUES
+('Kelsey','Mwangi','kelsey.mwangi@vt.edu','budgetpass1','User'),
+('Ariya','Das','ariya.das@vt.edu','budgetpass2','User'),
+('Faith','Yuan','faith.yuan@gmail.com','budgetpass3','User'),
+('Jordan','Rivera','jrivera@vt.edu','budgetpass4','Admin'),
+('Mina','Lopez','mina.lopez@vt.edu','budgetpass5','User'),
+('Ethan','Kim','ethan.kim@vt.edu','budgetpass6','User'),
+('Sofia','Garcia','sofia.garcia@vt.edu','budgetpass7','User'),
+('Liam','Nguyen','liam.nguyen@vt.edu','budgetpass8','User'),
+('Olivia','Patel','olivia.patel@vt.edu','budgetpass9','User'),
+('Noah','Smith','noah.smith@gmail.com','budgetpass10','User'),
+('Emma','Brown','emma.brown@vt.edu','budgetpass11','User'),
+('Ava','Johnson','ava.johnson@vt.edu','budgetpass12','User'),
+('Lucas','Martinez','lucas.martinez@vt.edu','budgetpass13','Admin'),
+('Mason','Davis','mason.davis@vt.edu','budgetpass14','User'),
+('Isabella','Wilson','isabella.wilson@vt.edu','budgetpass15','User'),
+('James','Taylor','james.taylor@vt.edu','budgetpass16','Admin'),
+('Charlotte','Anderson','charlotte.anderson@vt.edu','budgetpass17','User'),
+('Benjamin','Thomas','benjamin.thomas@vt.edu','budgetpass18','User'),
+('Amelia','Hernandez','amelia.hernandez@vt.edu','budgetpass19','User'),
+('Elijah','Moore','elijah.moore@gmail.com','budgetpass20','User');
 -- Sample categories
 INSERT INTO category (category_name, category_type) VALUES
 ('Dining Out',      'Expense'),
