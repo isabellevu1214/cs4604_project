@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import QuickAddModal from '../components/QuickAddModal';
 
 function Transactions({ currentUser }) {
@@ -15,18 +15,13 @@ function Transactions({ currentUser }) {
         notes: ''
     });
 
-    useEffect(() => {
-        fetchExpenses();
-        fetchCategories();
-    }, []);
-
-    const fetchExpenses = () => {
+    const fetchExpenses = useCallback(() => {
         fetch(`http://localhost:5000/api/expenses/${currentUser.user_id}`)
             .then(res => res.json())
             .then(data => setExpenses(data));
-    };
+    }, [currentUser.user_id]);
 
-    const fetchCategories = () => {
+    const fetchCategories = useCallback(() => {
         fetch('http://localhost:5000/api/categories')
             .then(res => res.json())
             .then(data => {
@@ -35,7 +30,12 @@ function Transactions({ currentUser }) {
                     setFormData(prev => ({ ...prev, category_id: data[0].category_id }));
                 }
             });
-    };
+    }, []);
+
+    useEffect(() => {
+        fetchExpenses();
+        fetchCategories();
+    }, [fetchExpenses, fetchCategories]);
 
     const handleInputChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
