@@ -1,0 +1,40 @@
+.sidebar {
+  width: 250px;
+  background-color: #1e293b;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.brand-title {
+  padding: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-bottom: 1px solid #334155;
+  color: #68c878;
+  margin: 0;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links li {
+  padding: 15px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 1.1rem;
+}
+
+.nav-links li:hover {
+  background-color: #334155;
+}
+
+.nav-links li.active {
+  background-color: #68c878;
+  color: #1e293b;
+  font-weight: bold;
+}
