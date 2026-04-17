@@ -19,7 +19,9 @@
   "description": "",
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^17.2.2",
     "express": "^5.2.1",
+    "google-auth-library": "^10.3.0",
     "pg": "^8.20.0"
   }
 }

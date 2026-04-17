@@ -1,27 +1,27 @@
 -- Sample users
 INSERT INTO app_user
-(first_name, last_name, email, password, user_type)
+(first_name, last_name, email, user_role, account_status)
 VALUES
-('Kelsey','Mwangi','kelsey.mwangi@vt.edu','budgetpass1','User'),
-('Ariya','Das','ariya.das@vt.edu','budgetpass2','User'),
-('Faith','Yuan','faith.yuan@gmail.com','budgetpass3','User'),
-('Jordan','Rivera','jrivera@vt.edu','budgetpass4','Admin'),
-('Mina','Lopez','mina.lopez@vt.edu','budgetpass5','User'),
-('Ethan','Kim','ethan.kim@vt.edu','budgetpass6','User'),
-('Sofia','Garcia','sofia.garcia@vt.edu','budgetpass7','User'),
-('Liam','Nguyen','liam.nguyen@vt.edu','budgetpass8','User'),
-('Olivia','Patel','olivia.patel@vt.edu','budgetpass9','User'),
-('Noah','Smith','noah.smith@gmail.com','budgetpass10','User'),
-('Emma','Brown','emma.brown@vt.edu','budgetpass11','User'),
-('Ava','Johnson','ava.johnson@vt.edu','budgetpass12','User'),
-('Lucas','Martinez','lucas.martinez@vt.edu','budgetpass13','Admin'),
-('Mason','Davis','mason.davis@vt.edu','budgetpass14','User'),
-('Isabella','Wilson','isabella.wilson@vt.edu','budgetpass15','User'),
-('James','Taylor','james.taylor@vt.edu','budgetpass16','Admin'),
-('Charlotte','Anderson','charlotte.anderson@vt.edu','budgetpass17','User'),
-('Benjamin','Thomas','benjamin.thomas@vt.edu','budgetpass18','User'),
-('Amelia','Hernandez','amelia.hernandez@vt.edu','budgetpass19','User'),
-('Elijah','Moore','elijah.moore@gmail.com','budgetpass20','User');
+('Kelsey','Mwangi','kelsey.mwangi@vt.edu','user','active'),
+('Ariya','Das','ariya.das@vt.edu','user','active'),
+('Faith','Yuan','faith.yuan@gmail.com','user','active'),
+('Jordan','Rivera','jrivera@vt.edu','admin','active'),
+('Mina','Lopez','mina.lopez@vt.edu','user','active'),
+('Ethan','Kim','ethan.kim@vt.edu','user','active'),
+('Sofia','Garcia','sofia.garcia@vt.edu','user','active'),
+('Liam','Nguyen','liam.nguyen@vt.edu','user','active'),
+('Olivia','Patel','olivia.patel@vt.edu','user','active'),
+('Noah','Smith','noah.smith@gmail.com','user','active'),
+('Emma','Brown','emma.brown@vt.edu','user','active'),
+('Ava','Johnson','ava.johnson@vt.edu','user','active'),
+('Lucas','Martinez','lucas.martinez@vt.edu','admin','active'),
+('Mason','Davis','mason.davis@vt.edu','user','active'),
+('Isabella','Wilson','isabella.wilson@vt.edu','user','active'),
+('James','Taylor','james.taylor@vt.edu','admin','active'),
+('Charlotte','Anderson','charlotte.anderson@vt.edu','user','active'),
+('Benjamin','Thomas','benjamin.thomas@vt.edu','user','active'),
+('Amelia','Hernandez','amelia.hernandez@vt.edu','user','active'),
+('Elijah','Moore','elijah.moore@gmail.com','user','active');
 -- Sample categories
 INSERT INTO category (category_name, category_type) VALUES
 ('Dining Out',      'Expense'),

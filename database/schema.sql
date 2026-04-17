@@ -12,14 +12,19 @@ DROP TABLE IF EXISTS app_user CASCADE;
 
 CREATE TABLE app_user (
     user_id      INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    first_name   VARCHAR(50) NOT NULL,
-    last_name    VARCHAR(50) NOT NULL,
+    google_sub   VARCHAR(255) UNIQUE,
+    first_name   VARCHAR(50),
+    last_name    VARCHAR(50),
     email        VARCHAR(255) NOT NULL UNIQUE,
-    password     VARCHAR(255) NOT NULL,
-    user_type    VARCHAR(30) NOT NULL CHECK (user_type IN ('User', 'Admin')),
-    CHECK (char_length(password) >= 8),
+    user_role    VARCHAR(30) NOT NULL CHECK (user_role IN ('user', 'admin')),
+    account_status VARCHAR(30) NOT NULL DEFAULT 'active' CHECK (account_status IN ('invited', 'active', 'disabled')),
+    created_by_user_id INTEGER REFERENCES app_user(user_id) ON DELETE SET NULL,
     CHECK (email ~* '^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$')
 );
+
+-- For fast lookup during login
+CREATE INDEX app_user_email_idx ON app_user(email);
+CREATE INDEX app_user_google_sub_idx ON app_user(google_sub);
 
 CREATE TABLE category (
     category_id    INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
