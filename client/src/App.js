@@ -8,6 +8,7 @@ import Budgets from './pages/Budgets';
 import Analytics from './pages/Analytics';
 
 function App() {
+  // Change this line back to null!
   const [currentUser, setCurrentUser] = useState(null);
   const [currentView, setCurrentView] = useState('dashboard');
 
@@ -19,8 +20,8 @@ function App() {
     switch (currentView) {
       case 'dashboard': return <Dashboard currentUser={currentUser} />;
       case 'transactions': return <Transactions currentUser={currentUser} />;
-      case 'budgets': return <Budgets />;
-      case 'analytics': return <Analytics />;
+      case 'budgets': return <Budgets currentUser={currentUser} />;
+      case 'analytics': return <Analytics currentUser={currentUser} />;
       default: return <Dashboard currentUser={currentUser} />;
     }
   };

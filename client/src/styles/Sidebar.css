@@ -1,18 +1,20 @@
 .sidebar {
   width: 250px;
-  background-color: #1e293b;
-  color: white;
+  background-color: var(--bg-card); 
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.03); 
+  z-index: 10;
 }
 
 .brand-title {
-  padding: 20px;
+  padding: 24px;
   font-size: 1.5rem;
   font-weight: bold;
-  border-bottom: 1px solid #334155;
-  color: #68c878;
+  border-bottom: 1px solid #f1f5f9;
+  color: var(--accent-green); 
   margin: 0;
 }
 
@@ -23,18 +25,22 @@
 }
 
 .nav-links li {
-  padding: 15px 20px;
+  padding: 16px 24px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  border-left: 4px solid transparent; 
 }
 
 .nav-links li:hover {
-  background-color: #334155;
+  background-color: var(--bg-main);
+  color: var(--text-main);
 }
 
 .nav-links li.active {
-  background-color: #68c878;
-  color: #1e293b;
+  background-color: var(--bg-main);
+  color: var(--accent-green);
   font-weight: bold;
+  border-left: 4px solid var(--accent-green); 
 }

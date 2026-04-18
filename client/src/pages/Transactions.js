@@ -16,21 +16,27 @@ function Transactions({ currentUser }) {
     });
 
     const fetchExpenses = useCallback(() => {
-        fetch(`http://localhost:5000/api/expenses/${currentUser.user_id}`)
+        fetch('http://localhost:5000/api/expenses', {
+            headers: { 'Authorization': `Bearer ${currentUser.token}` }
+        })
             .then(res => res.json())
-            .then(data => setExpenses(data));
-    }, [currentUser.user_id]);
+            .then(data => setExpenses(data))
+            .catch(err => console.error("Failed to fetch expenses", err));
+    }, [currentUser.token]);
 
     const fetchCategories = useCallback(() => {
-        fetch('http://localhost:5000/api/categories')
+        fetch('http://localhost:5000/api/categories', {
+            headers: { 'Authorization': `Bearer ${currentUser.token}` }
+        })
             .then(res => res.json())
             .then(data => {
                 setCategories(data);
-                if (data.length > 0) {
+                if (data.length > 0 && !formData.category_id) {
                     setFormData(prev => ({ ...prev, category_id: data[0].category_id }));
                 }
-            });
-    }, []);
+            })
+            .catch(err => console.error("Failed to fetch categories", err));
+    }, [currentUser.token, formData.category_id]);
 
     useEffect(() => {
         fetchExpenses();
@@ -68,36 +74,34 @@ function Transactions({ currentUser }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         const url = editingId ? `http://localhost:5000/api/expenses/${editingId}` : 'http://localhost:5000/api/expenses';
         const method = editingId ? 'PUT' : 'POST';
 
-        // Attach her ID to the payload before sending
-        const payload = { ...formData, user_id: currentUser.user_id };
-
         fetch(url, {
             method: method,
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            headers: {
+                'Authorization': `Bearer ${currentUser.token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
         })
-            .then(async (res) => {
-                if (!res.ok) {
-                    const errData = await res.json();
-                    alert(`Error: ${errData.error}`);
-                    throw new Error(errData.error);
-                }
-                return res.json();
-            })
+            .then(res => res.json())
             .then(() => {
-                fetchExpenses();
-                closeModal();
+                fetchExpenses(); // Refresh the table automatically
+                closeModal();    // Hide the modal
             })
-            .catch(err => console.error("Request failed", err));
+            .catch(err => console.error("Error saving expense", err));
     };
 
     const handleDelete = (id) => {
         if (window.confirm("Are you sure you want to delete this expense?")) {
-            fetch(`http://localhost:5000/api/expenses/${id}`, { method: 'DELETE' })
-                .then(() => fetchExpenses());
+            fetch(`http://localhost:5000/api/expenses/${id}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${currentUser.token}` }
+            })
+                .then(() => fetchExpenses()) // Refresh the table
+                .catch(err => console.error("Error deleting expense", err));
         }
     };
 

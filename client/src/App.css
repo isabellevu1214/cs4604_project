@@ -1,8 +1,20 @@
+:root {
+  --bg-main: #f4f7f6;
+  --bg-card: #ffffff;
+  --text-main: #2d3748;
+  --text-muted: #718096;
+  
+  --accent-green: #95b8a2;   
+  --accent-yellow: #e9c46a;  
+  --accent-purple: #a594f9;  
+  --accent-red: #d98a8a;     
+}
+
 body {
   margin: 0;
   font-family: "Segoe UI", Tahoma, sans-serif;
-  background-color: #f8fafc;
-  color: #334155;
+  background-color: var(--bg-main);
+  color: var(--text-main);
 }
 
 .app-layout {
@@ -13,18 +25,20 @@ body {
 /* Sidebar Navigation */
 .sidebar {
   width: 250px;
-  background-color: #1e293b;
-  color: white;
+  background-color: #ffffff;
+  color: var(--text-main);
   display: flex;
   flex-direction: column;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.03);
+  z-index: 10;
 }
 
 .brand-title {
-  padding: 20px;
+  padding: 24px;
   font-size: 1.5rem;
   font-weight: bold;
-  border-bottom: 1px solid #334155;
-  color: #68c878;
+  border-bottom: 1px solid #f1f5f9;
+  color: var(--text-main);
 }
 
 .nav-links {
@@ -34,20 +48,24 @@ body {
 }
 
 .nav-links li {
-  padding: 15px 20px;
+  padding: 16px 24px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  font-size: 1.05rem;
+  color: var(--text-muted);
+  border-left: 4px solid transparent;
 }
 
 .nav-links li:hover {
-  background-color: #334155;
+  background-color: var(--bg-main);
+  color: var(--text-main);
 }
 
 .nav-links li.active {
-  background-color: #68c878;
-  color: #1e293b;
+  background-color: var(--bg-main);
+  color: var(--accent-green);
   font-weight: bold;
+  border-left: 4px solid var(--accent-green);
 }
 
 /* Main Content Area */
@@ -58,10 +76,10 @@ body {
 }
 
 .view-container {
-  background: white;
+  background: var(--bg-card);
   padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
 }
 
 .view-container h2 {

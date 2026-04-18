@@ -293,6 +293,115 @@ app.delete('/api/expenses/:id', requireAuth, async (req, res) => {
     }
 });
 
+// --- BUDGETS ---
+// READ: Get all budgets for the logged in user
+app.get('/api/budgets', requireAuth, async (req, res) => {
+    try {
+        const query = `
+            SELECT b.budget_id AS id, c.category_name AS category, 
+                   b.budget_limit AS limit, b.start_date, b.end_date,
+                   (b.budget_limit - COALESCE(SUM(e.amount), 0)) AS remaining
+            FROM budget b
+            JOIN category c ON b.category_id = c.category_id
+            LEFT JOIN expense e ON c.category_id = e.category_id 
+                               AND e.user_id = b.user_id 
+                               AND e.expense_date >= b.start_date 
+                               AND e.expense_date <= b.end_date
+            WHERE b.user_id = $1
+            GROUP BY b.budget_id, c.category_name, b.budget_limit, b.start_date, b.end_date;
+        `;
+        const result = await pool.query(query, [req.user.user_id]);
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// CREATE: Add a new budget
+app.post('/api/budgets', requireAuth, async (req, res) => {
+    const { category_id, budget_limit, start_date, end_date } = req.body;
+    try {
+        const result = await pool.query(
+            'INSERT INTO budget (user_id, category_id, budget_limit, budget_remaining, start_date, end_date) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+            [req.user.user_id, category_id, budget_limit, budget_limit, start_date, end_date]
+        );
+        res.json(result.rows[0]);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// UPDATE: Modify an existing budget limit
+app.put('/api/budgets/:id', requireAuth, async (req, res) => {
+    const { id } = req.params;
+    const { budget_limit, start_date, end_date } = req.body;
+    try {
+        const result = await pool.query(
+            'UPDATE budget SET budget_limit = $1, start_date = $2, end_date = $3 WHERE budget_id = $4 AND user_id = $5 RETURNING *',
+            [budget_limit, start_date, end_date, id, req.user.user_id]
+        );
+        res.json(result.rows[0]);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// DELETE: Remove a budget
+app.delete('/api/budgets/:id', requireAuth, async (req, res) => {
+    const { id } = req.params;
+    try {
+        await pool.query('DELETE FROM budget WHERE budget_id = $1 AND user_id = $2', [id, req.user.user_id]);
+        res.json({ message: "Budget deleted successfully" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
+// --- REPORTS ---
+// REPORT 1: Category Spending Breakdown
+app.get('/api/reports/category-spending', requireAuth, async (req, res) => {
+    try {
+        const query = `
+            SELECT c.category_name, SUM(e.amount) AS total_spent
+            FROM expense e
+            JOIN category c ON e.category_id = c.category_id
+            WHERE e.user_id = $1 
+              AND EXTRACT(MONTH FROM e.expense_date) = EXTRACT(MONTH FROM CURRENT_DATE)
+              AND EXTRACT(YEAR FROM e.expense_date) = EXTRACT(YEAR FROM CURRENT_DATE)
+            GROUP BY c.category_name
+            ORDER BY total_spent DESC;
+        `;
+        const result = await pool.query(query, [req.user.user_id]);
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// REPORT 2: Budget Utilization
+app.get('/api/reports/budget-utilization', requireAuth, async (req, res) => {
+    try {
+        const query = `
+            SELECT c.category_name, b.budget_limit, COALESCE(SUM(e.amount), 0) AS actual_spent, 
+                   (b.budget_limit - COALESCE(SUM(e.amount), 0)) AS remaining_balance,
+                   b.start_date, b.end_date
+            FROM budget b
+            JOIN category c ON b.category_id = c.category_id
+            LEFT JOIN expense e ON c.category_id = e.category_id 
+                               AND e.user_id = b.user_id 
+                               AND e.expense_date >= b.start_date 
+                               AND e.expense_date <= b.end_date
+            WHERE b.user_id = $1
+            GROUP BY c.category_name, b.budget_limit, b.start_date, b.end_date;
+        `;
+        const result = await pool.query(query, [req.user.user_id]);
+        res.json(result.rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.listen(port, () => {
     console.log(`Backend server running on port ${port}`);
 });

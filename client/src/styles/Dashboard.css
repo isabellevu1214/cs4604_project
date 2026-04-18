@@ -1,57 +1,109 @@
 .dashboard-view {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 32px;
 }
 
 .dashboard-header {
-  background-color: white;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  margin-bottom: 8px;
 }
 
 .greeting {
   margin: 0;
-  color: #1e293b;
-  font-size: 1.8rem;
+  color: var(--text-main);
+  font-size: 2.2rem;
+  font-weight: 700;
 }
 
 .date-subtitle {
-  margin: 5px 0 0 0;
-  color: #64748b;
+  margin: 6px 0 0 0;
+  color: var(--text-muted);
+  font-size: 1.1rem;
 }
 
-.dashboard-widgets {
+.dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
 }
 
-.widget {
-  background-color: white;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+.widget-card {
+  background-color: var(--bg-card);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
 }
 
-.power-amount {
-  font-size: 3rem;
+.widget-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.06);
+}
+
+.widget-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: var(--text-muted);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Number Typography */
+.widget-amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0 0 10px 0;
+}
+
+/* Pill Tags */
+.pill-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
   font-weight: bold;
-  color: #27ae60;
-  margin: 10px 0;
 }
 
-.power-subtext {
-  color: #64748b;
+.pill-green {
+  background-color: #e6f4ea;
+  color: var(--accent-green);
+}
+
+.pill-purple {
+  background-color: #f3f0ff;
+  color: var(--accent-purple);
+}
+
+/* List Styling for Alerts */
+.alerts-list {
+  list-style: none;
+  padding: 0;
   margin: 0;
 }
 
-.alerts-widget ul {
-  padding-left: 20px;
-  color: #475569;
+.alert-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.95rem;
 }
 
-.alerts-widget li {
-  margin-bottom: 10px;
+.alert-item:last-child {
+  border-bottom: none;
+}
+
+.alert-name {
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.alert-date {
+  color: var(--text-muted);
 }
