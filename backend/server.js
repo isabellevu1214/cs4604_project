@@ -2,7 +2,7 @@ const express = require('express');
 const { Pool } = require('pg');
 const cors = require('cors');
 const { OAuth2Client } = require('google-auth-library');
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/.env' });
 
 const app = express();
 const port = 5000;
@@ -107,13 +107,18 @@ async function getUserFromBearerToken(req) {
 async function requireAuth(req, res, next) {
     try {
         const user = await getUserFromBearerToken(req);
-        if (!user) return res.status(401).json({ success: false, error: 'Unauthorized' });
+        if (!user) {
+            console.log("Token was valid, but database user creation failed.");
+            return res.status(401).json({ success: false, error: 'Unauthorized' });
+        }
         req.user = user;
         return next();
     } catch (err) {
+        console.log("GOOGLE AUTH ERROR:", err.message);
         return res.status(401).json({ success: false, error: 'Unauthorized' });
     }
 }
+
 // checks if user is admin
 function requireAdmin(req, res, next) {
     if (req.user?.user_role === 'admin') return next();
