@@ -189,16 +189,26 @@ app.post('/api/users', requireAuth, requireAdmin, async (req, res) => {
 });
 
 // UPDATE (admin only)
-app.put('/api/users/:id', requireAuth, requireAdmin, async (req, res) => {
+app.put('/api/users/:id', requireAuth, async (req, res) => {
     const { id } = req.params;
+
+    // Security check: only admin or the actual user can edit this profile
+    if (req.user.user_role !== 'admin' && req.user.user_id !== parseInt(id)) {
+        return res.status(403).json({ error: 'Forbidden: You can only edit your own profile' });
+    }
+
     const { first_name, last_name, email, user_role, account_status } = req.body;
     try {
         const normalizedEmail = email ? normalizeEmail(email) : null;
-        const role = user_role === 'admin' ? 'admin' : user_role === 'user' ? 'user' : null;
-        const status =
-            account_status === 'invited' || account_status === 'active' || account_status === 'disabled'
-                ? account_status
-                : null;
+
+        // Only let admins change roles or status. Regular users pass null to trigger COALESCE.
+        let role = null;
+        let status = null;
+        if (req.user.user_role === 'admin') {
+            role = user_role === 'admin' ? 'admin' : user_role === 'user' ? 'user' : null;
+            status = account_status === 'invited' || account_status === 'active' || account_status === 'disabled' ? account_status : null;
+        }
+
         const result = await pool.query(
             `UPDATE app_user
              SET first_name = COALESCE($1, first_name),
@@ -217,8 +227,14 @@ app.put('/api/users/:id', requireAuth, requireAdmin, async (req, res) => {
 });
 
 // DELETE (admin only): Delete a user
-app.delete('/api/users/:id', requireAuth, requireAdmin, async (req, res) => {
+app.delete('/api/users/:id', requireAuth, async (req, res) => {
     const { id } = req.params;
+
+    // Security check: only admin or the actual user can delete this profile
+    if (req.user.user_role !== 'admin' && req.user.user_id !== parseInt(id)) {
+        return res.status(403).json({ error: 'Forbidden: You can only delete your own profile' });
+    }
+
     try {
         await pool.query('DELETE FROM app_user WHERE user_id = $1', [id]);
         res.json({ message: "User deleted successfully" });

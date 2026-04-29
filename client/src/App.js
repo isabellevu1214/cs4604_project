@@ -6,9 +6,9 @@ import Dashboard from './pages/Dashboard';
 import Transactions from './pages/Transactions';
 import Budgets from './pages/Budgets';
 import Analytics from './pages/Analytics';
+import UserProfile from './pages/UserProfile';
 
 function App() {
-  // Change this line back to null!
   const [currentUser, setCurrentUser] = useState(null);
   const [currentView, setCurrentView] = useState('dashboard');
 
@@ -22,6 +22,7 @@ function App() {
       case 'transactions': return <Transactions currentUser={currentUser} />;
       case 'budgets': return <Budgets currentUser={currentUser} />;
       case 'analytics': return <Analytics currentUser={currentUser} />;
+      case 'profile': return <UserProfile currentUser={currentUser} onLogout={() => setCurrentUser(null)} onUpdateUser={setCurrentUser} />;
       default: return <Dashboard currentUser={currentUser} />;
     }
   };
